@@ -57,4 +57,4 @@ dotnet run
 
 - Alternatively, you can run the application through Visual Studio by opening the solution file and pressing F5 or clicking the "Run" button.
 
-[![Buy me a coffee](https://www.buymeacoffee.com/andrewnx)](https://media2.giphy.com/media/o7RZbs4KAA6tvM4H6j/giphy.gif)
+[![Buy me a coffee](https://www.buymeacoffee.com/andrewnx)](https://ibb.co/yY4LjXG)
