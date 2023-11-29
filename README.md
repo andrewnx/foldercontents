@@ -55,6 +55,6 @@ To run the application, use the following command:
 dotnet run
 ```
 
-- Alternatively, you can run the application through Visual Studio by opening the solution file and pressing F5 or clicking the "Run" button.
+Alternatively, you can run the application through Visual Studio by opening the solution file and pressing F5 or clicking the "Run" button.
 
 [![Buy me a coffee](https://i.ibb.co/SdfqCPW/buymeacoffee2.webp)](https://www.buymeacoffee.com/andrewnx)
