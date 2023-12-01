@@ -14,18 +14,22 @@ namespace foldercontents
         private const int MaxDepth = 5; // Maximum depth for directory traversal
 
         private bool _isBusy;
-        public new bool IsBusy {
+        public new bool IsBusy
+        {
             get => _isBusy;
-            set {
+            set
+            {
                 _isBusy = value;
                 OnPropertyChanged(nameof(IsBusy));
             }
         }
 
         private string? _folderContentsText;
-        public string FolderContentsText {
+        public string FolderContentsText
+        {
             get => _folderContentsText;
-            set {
+            set
+            {
                 _folderContentsText = value;
                 OnPropertyChanged(nameof(FolderContentsText));
             }
@@ -48,7 +52,7 @@ namespace foldercontents
                 string selectedFolderPath = await PickFolderAsync();
                 if (!string.IsNullOrEmpty(selectedFolderPath))
                 {
-                    _currentPath = selectedFolderPath;
+                    _currentPath = selectedFolderPath; // Ensure _currentPath is assigned before usage
                     UpdateFolderContents(_currentPath);
                 }
             }
@@ -57,7 +61,6 @@ namespace foldercontents
                 await DisplayAlert("Error", $"Error selecting folder: {ex.Message}", "OK");
             }
         }
-
         private static async Task<string> PickFolderAsync()
         {
             try
@@ -83,7 +86,10 @@ namespace foldercontents
         {
             IsBusy = true;
             FolderContents.Clear();
-            BuildFolderTree(path, 0);
+            if (path != null) // Check for null before calling BuildFolderTree
+            {
+                BuildFolderTree(path, 0);
+            }
             FolderContentsText = string.Join("\n", FolderContents);
             IsBusy = false;
         }
@@ -91,11 +97,20 @@ namespace foldercontents
         private void BuildFolderTree(string path, int depth)
         {
             if (depth > MaxDepth) return; // Limit the recursion depth
+
+            // Skip the "node_modules" and ".git" folders
+            string currentDirName = Path.GetFileName(path);
+            if (currentDirName.Equals("node_modules", StringComparison.OrdinalIgnoreCase) ||
+                currentDirName.Equals(".git", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             // Get directories
             foreach (var dir in Directory.GetDirectories(path))
             {
-                var dirName = Path.GetFileName(dir);
-                FolderContents.Add(GetFormattedName("Dir: " + dirName, depth));
+                string subDirName = Path.GetFileName(dir); // Use a different variable name
+                FolderContents.Add(GetFormattedName("Dir: " + subDirName, depth));
                 BuildFolderTree(dir, depth + 1); // Recursively build tree for subdirectories
             }
 
